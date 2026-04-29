@@ -67,7 +67,7 @@ export async function query<T = unknown>(
     const result = mockDb.query<T>(sql, params);
     return result;
   }
-  const [rows] = await p.execute(sql, params);
+  const [rows] = await p.execute(sql, params as mysql.ExecuteValues);
   return rows as T[];
 }
 
@@ -80,7 +80,7 @@ export async function execute(
     const r: MockDbResult = mockDb.execute(sql, params);
     return r;
   }
-  const [result] = await p.execute(sql, params);
+  const [result] = await p.execute(sql, params as mysql.ExecuteValues);
   const r = result as mysql.ResultSetHeader;
   return { insertId: r.insertId, affectedRows: r.affectedRows };
 }
